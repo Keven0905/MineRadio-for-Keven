@@ -4,19 +4,16 @@
 
 Mineradio 是 Windows Electron 桌面音乐播放器，核心体验包括搜索、播放、歌单、歌词、3D 歌单架、粒子视觉预设、DIY 视觉控制台和 GitHub 自动更新。
 
-- 当前可运行程序：`E:\桌面\播放器软件\Mineradio\Mineradio.exe`
-- 当前运行版主目录：`E:\桌面\播放器软件\Mineradio`
-- 当前真实代码/Git 仓库：`E:\桌面\播放器软件\Mineradio\resources\app`
-- GitHub 仓库：`https://github.com/XxHuberrr/Mineradio.git`
-- 当前源码版本：`v1.1.0`
-- 统一备份区：`E:\桌面\播放器软件\工作区备份`
+- 当前真实代码/Git 仓库：`d:\Mineradio-main\Mineradio-main`
+- GitHub 仓库：`https://github.com/Keven0905/MineRadio-for-Keven.git`
+- 当前源码版本：`v1.1.1`
 
 ## Start Every New Codex Thread Here
 
 新对话开始处理 Mineradio 前，必须先确认当前目录是：
 
 ```powershell
-E:\桌面\播放器软件\Mineradio\resources\app
+d:\Mineradio-main\Mineradio-main
 ```
 
 然后读这些文件：
@@ -29,7 +26,7 @@ E:\桌面\播放器软件\Mineradio\resources\app
 ## Repository Layout
 
 ```text
-Mineradio/resources/app/
+Mineradio-main/Mineradio-main/
 ├─ public/
 │  ├─ index.html        # 主 UI、CSS、歌词、粒子、3D 歌单架、视觉控制台
 │  └─ vendor/           # 本地 vendor 依赖
@@ -51,9 +48,7 @@ npm run build:win:dir
 npm run build:win
 ```
 
-前端主逻辑在 `public/index.html`。这个目录是正在运行的 `Mineradio.exe` 使用的 app 目录，所以改完后重启外层 `E:\桌面\播放器软件\Mineradio\Mineradio.exe` 就能及时检查效果。没有独立 npm test，改动后至少做：
-
-注意：运行版 `resources\app\node_modules` 可能只包含运行依赖。如果发布打包时缺少 `electron-builder`，先在 `E:\桌面\播放器软件\Mineradio\resources\app` 执行 `npm install`，再执行 `npm run build:win`。
+前端主逻辑在 `public/index.html`。没有独立 npm test，改动后至少做：
 
 ```powershell
 git diff --check
@@ -86,8 +81,7 @@ GitHub CLI / `gh auth` / Release 上传需要代理时，优先使用可用本�
 - UI 审美：精致、暗色、高级、流畅，拒绝廉价渐变、过度透明、错位、闪烁和卡顿。
 - 视觉质量定义：质感、丝滑度、帧数稳定同时成立；性能优化不能牺牲既有质感。
 - 玻璃质感：当前播放器 SVG 玻璃质感是黄金版本，详见 `docs/GLASS_SVG_TEXTURE.md`。
-- 备份策略：不要删除旧资料；重复和历史内容移动到 `E:\桌面\播放器软件\工作区备份`。
-- 重要：不要再改旧外层源码目录。旧的 `E:\桌面\播放器软件\Mineradio\public` / `desktop` 已经归档；现在只有 `E:\桌面\播放器软件\Mineradio\resources\app\public` / `desktop` 会影响运行版。
+- 备份策略：不要删除旧资料；重复和历史内容移动到备份目录。
 
 ## Memory Protocol
 

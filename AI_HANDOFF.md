@@ -2,16 +2,13 @@
 
 这个文件是给后续接管本工作区的 AI 看的。每次完成一个任务后，都要更新本文件的「工作日志」和「未完成事项」，让下一位接手者能快速知道用户偏好、当前状态和最近做过什么。
 
-## 当前权威入口（2026-06-24）
+## 当前权威入口（2026-07-01）
 
-- 当前真实代码/Git 仓库仍是 `E:\桌面\播放器软件\Mineradio\resources\app`。
-- 当前版本是 `v1.1.0` 纯净安装发布线；本轮已从当前可信源码重新生成并发布 `dist/Mineradio-1.1.0-Setup.exe`。
-- GitHub 仓库已公开：`https://github.com/XxHuberrr/Mineradio`
-- `v1.1.0` Release：`https://github.com/XxHuberrr/Mineradio/releases/tag/v1.1.0`
-- GitHub `/releases/latest` 仍返回 `v1.0.10`，这是刻意设置，避免旧版软件内更新到 1.1.0。
-- `v1.0.10` 及更早旧安装包不再信任，需要在 GitHub Release/README/SECURITY 中标记隔离。
-- `v1.1.0` 不提供从 `v1.0.10` 的软件内本地更新，不上传 `latest.yml`，不生成 `v1.0.10 -> v1.1.0` 快速补丁。
-- 新对话优先读 `AGENTS.md`、`docs/PROJECT_MEMORY.md`、`docs/HANDOFF_NEXT_CHAT.md`；涉及安全重建或发布时再读 `docs/SECURITY_REBUILD_2026-06-24.md`。本文件下面包含较早历史记录，不能覆盖上述文件的当前结论。
+- 当前真实代码/Git 仓库：`d:\Mineradio-main\Mineradio-main`
+- 当前版本：`v1.1.1`
+- GitHub 仓库：`https://github.com/Keven0905/MineRadio-for-Keven.git`
+- 新对话优先读 `AGENTS.md`、`docs/PROJECT_MEMORY.md`、`docs/HANDOFF_NEXT_CHAT.md`。
+- 本文件下面包含较早历史记录（来自原作者 XxHuberrr 的仓库），仅供参考。
 
 ## 用户偏好
 
@@ -74,6 +71,13 @@
 这个目录是人工归档区，不参与软件更新流程。
 
 ## 已完成工作日志
+
+### 2026-07-01
+
+- Fork 项目从 `https://github.com/XxHuberrr/Mineradio` 到 `https://github.com/Keven0905/MineRadio-for-Keven`。
+- 本地仓库路径更新为 `d:\Mineradio-main\Mineradio-main`，分支为 `Keven`。
+- 更新 `AGENTS.md` 和 `AI_HANDOFF.md` 中的路径和远程仓库信息。
+- 准备在原作者 v1.1.1 基础上进行二次开发。
 
 ### 2026-06-24
 

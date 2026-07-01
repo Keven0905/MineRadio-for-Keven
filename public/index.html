@@ -6,6 +6,9 @@
 <title>Mineradio</title>
 <meta name="referrer" content="no-referrer">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+<!-- ============================================================ -->
+<!-- Vendor / Preload Script                                      -->
+<!-- ============================================================ -->
 <script src="vendor/three.r128.min.js"></script>
 <script src="vendor/music-tempo.min.js"></script>
 <script src="vendor/gsap.min.js"></script>
@@ -16,7 +19,17 @@ try {
   document.documentElement.classList.add('simple-mode-preload');
 }
 </script>
+<!-- ============================================================ -->
+<!-- Style Sections                                               -->
+<!-- ============================================================ -->
 <style>
+/* ============================================================
+   Style map
+   - Base, desktop shell, splash, search, Home
+   - Top chrome, player controls, modals, toasts
+   - FX console, playlist panel, saved glass, stage lyrics
+   - Gesture HUD and responsive rules
+   ============================================================ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{font-family:var(--font-sans);background:#000;color:#fff;overflow:hidden;height:100vh;width:100vw;user-select:none;-webkit-font-smoothing:antialiased}
 body.cursor-hidden,body.cursor-hidden *{cursor:none!important}
@@ -2129,6 +2142,12 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
 </style>
 </head>
 <body>
+<!-- ============================================================ -->
+<!-- DOM Sections                                                 -->
+<!-- - Desktop shell, scene layers, splash, search, Home          -->
+<!-- - Top chrome, FX console, playlist panel, player controls    -->
+<!-- - Login/user/update/detail modals, toast, visual guide       -->
+<!-- ============================================================ -->
 <div id="desktop-window-shell">
 <div id="desktop-titlebar" aria-label="window controls">
   <div class="desktop-drag-region">
@@ -2973,8 +2992,22 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
 
 </div>
 
+<!-- ============================================================ -->
+<!-- Application Script                                           -->
+<!-- ============================================================ -->
 <script>
 'use strict';
+
+// ============================================================
+//  Application Script Index
+//  1. Global state and preferences
+//  2. Three.js, camera, particles, shaders, stage lyrics
+//  3. 3D playlist shelf and detail content
+//  4. API helpers, Home, weather radio, search
+//  5. Audio, playback queue, lyrics, playlist panel
+//  6. FX console, update, login/account flows
+//  7. Guides, gesture, resize, shell startup, main loop
+// ============================================================
 
 // ============================================================
 //  Global State
@@ -6165,6 +6198,7 @@ applyRendererPowerMode();
 
 // ----- 顶点 Shader -----
 //   v7.1: 律动幅度 ×2.5, Tunnel 自旋, 虚空预设, 切歌颜色渐变
+// High-risk boundary: particle shaders and preset math. Keep edits surgical.
 var vs = `
 precision highp float;
 uniform float uTime, uBass, uMid, uTreble, uBeat, uEnergy, uBurstAmt;
@@ -13068,6 +13102,7 @@ function commitCoverCrop() {
 //   - stage:  弧形排列, 居中, 有倒影, 当前卡片"呼吸+光环"
 //             卡片间粒子穿梭, 切歌时飞出动画
 // ============================================================
+// High-risk boundary: 3D playlist shelf interaction and layout.
 var shelfPinnedOpen = false;
 var shelfManager = null;
 var shelfOpenAnimAt = -10;
@@ -15767,6 +15802,10 @@ function homeListenSummary() {
   var totalPlays = Object.keys(listenStatsState.songs || {}).reduce(function(sum, key){ return sum + ((listenStatsState.songs[key] && listenStatsState.songs[key].plays) || 0); }, 0);
   return { recent: recent, topSong: topSong, topArtist: topArtist, totalPlays: totalPlays };
 }
+
+// ============================================================
+//  Home Dashboard: time, weather, greeting, lyric quotes
+// ============================================================
 var HOME_DASHBOARD_QUOTES = [
   { text: '一代人终将老去，但总有人正年轻。', source: '《火车驶向云外，梦安魂于九霄》' },
   { text: '如此生活三十年，直到大厦崩塌。', source: '《杀死那个石家庄人》' },
@@ -15880,6 +15919,10 @@ function stopHomeDashboardTicker() {
     homeDashboardTimer = null;
   }
 }
+
+// ============================================================
+//  Home Discover: cards, tiles, listener summary
+// ============================================================
 function fallbackHomeTiles() {
   return [
     { kind: 'login', title: '登录同步歌单', sub: '网易云 / QQ 音乐' },
@@ -16061,6 +16104,10 @@ function renderHomeDiscover() {
   }
   renderHomeTiles();
 }
+
+// ============================================================
+//  Home Data: recommendations, weather radio, location
+// ============================================================
 async function loadHomeDiscover(force) {
   if (homeDiscoverState.loading) return;
   if (homeDiscoverState.loaded && !force) return;
@@ -16316,6 +16363,10 @@ function setHomeControlsLocked(locked) {
   if (bottom && !locked) bottom.classList.remove('soft-hidden');
   if (locked) closeMiniQueue();
 }
+
+// ============================================================
+//  Home Console: bottom player visibility from the Home card
+// ============================================================
 function openHomePlayerConsole() {
   setHomeControlsLocked(false);
   var bar = document.getElementById('bottom-bar');
@@ -16351,6 +16402,10 @@ function toggleHomePlayerConsole() {
   }
   updateHomeConsoleToggleText();
 }
+
+// ============================================================
+//  Home Visual Preview: wallpaper particles while idle
+// ============================================================
 function ensureHomeWallpaperParticles(opts) {
   opts = opts || {};
   if (uniforms && uniforms.uAlpha && opts.instant) {
@@ -16408,6 +16463,10 @@ function applyStartupStarfieldPreset() {
     syncFxUniforms();
   }
 }
+
+// ============================================================
+//  Home Visibility Lifecycle
+// ============================================================
 function updateEmptyHomeVisibility(opts) {
   opts = opts || {};
   var show = shouldShowEmptyHome();
@@ -16440,6 +16499,10 @@ function updateEmptyHomeVisibility(opts) {
   }
   return show;
 }
+
+// ============================================================
+//  Home Actions: search, import, library, playback entrypoints
+// ============================================================
 function runHomeSearch(query, mode) {
   homeForcedOpen = false;
   homeSuppressed = false;
@@ -18178,6 +18241,7 @@ async function doSearch(q, opts) {
 // ============================================================
 //  音频上下文 & 频谱分析
 // ============================================================
+// High-risk boundary: playback chain and audio analysis.
 function initAudio() {
   if (audioReady) return;
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -23091,6 +23155,7 @@ function setCamMode(m) {
 // ============================================================
 //  更新提示预览
 // ============================================================
+// High-risk boundary: update checks, downloads, and patch flow.
 function formatUpdateBytes(bytes) {
   bytes = Number(bytes) || 0;
   if (bytes >= 1024 * 1024 * 1024) return (bytes / (1024 * 1024 * 1024)).toFixed(2).replace(/\.00$/, '') + ' GB';
@@ -23610,6 +23675,7 @@ function pulseUpdateReady() {
 // ============================================================
 //  登录系统
 // ============================================================
+// High-risk boundary: login and account provider state.
 function openGsapModal(mask) {
   if (!mask) return;
   var panel = mask.querySelector('.modal');
@@ -27070,6 +27136,7 @@ function sampleRenderPerf(now, dt) {
   }
   maybeTrimRuntimeCaches(now);
 }
+// High-risk boundary: render loop, camera timing, and visual sync.
 function animate() {
   requestAnimationFrame(animate);
   var now = performance.now();
